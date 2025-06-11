@@ -10,7 +10,8 @@ def download_models(models, models_path):
 
     try:
         for model in models:
-            filename, url = model
+            filename = model[0]
+            url = model[1]
             file_path = os.path.join(models_path, filename)
 
             if not os.path.exists(file_path):
