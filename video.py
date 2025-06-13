@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 import os
 import PIL.Image
 
@@ -30,7 +31,7 @@ def save_video(video_path: str, frames: list[PIL.Image.Image], frame_rate: int =
     height = frames[0].height
     width = frames[0].width
 
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Use 'avc1' or 'X264' if 'mp4v' doesn't work
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     video_writer = cv2.VideoWriter(video_path, fourcc, frame_rate, (width, height))
 
     for frame in frames:
@@ -39,3 +40,5 @@ def save_video(video_path: str, frames: list[PIL.Image.Image], frame_rate: int =
         video_writer.write(cv2_frame)
 
     video_writer.release()
+
+    print(f'✅ Video guardado en: {video_path}')
