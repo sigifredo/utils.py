@@ -1,5 +1,6 @@
 import cv2
 import os
+import PIL.Image
 
 
 def extract_frames(video_path, output_folder, video_width=None, video_height=None):
@@ -23,3 +24,18 @@ def extract_frames(video_path, output_folder, video_width=None, video_height=Non
 
     cap.release()
     print(f'✅ {frame_count} frames extraídos a la carpeta: "{output_folder}"')
+
+
+def save_video(video_path: str, frames: list[PIL.Image.Image], frame_rate: int = 15) -> None:
+    height = frames[0].height
+    width = frames[0].width
+
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Use 'avc1' or 'X264' if 'mp4v' doesn't work
+    video_writer = cv2.VideoWriter(video_path, fourcc, frame_rate, (width, height))
+
+    for frame in frames:
+        np_frame = np.array(frame)
+        cv2_frame = cv2.cvtColor(np_frame, cv2.COLOR_RGB2BGR)
+        video_writer.write(cv2_frame)
+
+    video_writer.release()
